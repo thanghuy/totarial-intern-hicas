@@ -11,6 +11,7 @@ const Layout = lazy(() => import("./Layouts/Index"));
 const Profile = lazy(() => import("./Profiles/Main"));
 // const NotFound = lazy(() => import("./Shares/NotFound/NotFound"));
 const NotifiNoLogin = lazy(() => import("./Shares/Notification/NotLogin"));
+const Register = lazy(() => import("./auth/pages/Register"));
 const Router = () => {
   const isLogin = useAppSelector((state) => state.auth.isLogin);
   return (
@@ -21,8 +22,9 @@ const Router = () => {
         </div>
       }
     >
-      <Route exact path="/login" component={Login} />
       <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
         <Layout>
           <Route exact path={["/", "/shop"]} component={ShopMain} />
           <Route exact path="/shop/product/:id" component={ProductMain} />

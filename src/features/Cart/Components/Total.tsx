@@ -1,6 +1,9 @@
 import React from "react";
 import { Row, Col, Card } from "antd";
+import { useAppSelector } from "../../../app/hooks";
+
 const Total = () => {
+  const cart = useAppSelector(state => state.cart);
   return (
     <Row>
       <Col span={24}>
@@ -12,9 +15,9 @@ const Total = () => {
                 <h4>Total</h4>
             </div>
             <div className="total-price">
-                <h4>13 880 000 VND</h4>
-                <h4>1 388 000 VND</h4>
-                <h4>15 168 000 VND</h4>
+                <h4>{cart.subTotal} VND</h4>
+                <h4>{cart.tax} VND</h4>
+                <h4>{cart.total} VND</h4>
             </div>
           </div>
         </Card>

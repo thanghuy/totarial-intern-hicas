@@ -6,6 +6,7 @@ import Detail from "./components/Detail";
 import { Badge } from "antd";
 import ProductAPI from "../../services/ProductAPI";
 import { RouteProps } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
 const { Title } = Typography;
 interface RouteInfo extends RouteProps {
   params: {
@@ -15,13 +16,13 @@ interface RouteInfo extends RouteProps {
 const ProductMain = ({ match }: { match: RouteInfo }) => {
   const { params }: { params: { id: string } } = match;
   const { id }: { id: string } = params;
+  const cart = useAppSelector(state => state.cart);
   const [product, setProduct] = useState<any>(null);
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const resp = await ProductAPI.getDetail(id);
         setProduct(resp.data);
-        console.log(resp.data);
       } catch (error) {
         console.log(error);
       }
@@ -37,7 +38,7 @@ const ProductMain = ({ match }: { match: RouteInfo }) => {
           <Breadcrumb.Item>Product</Breadcrumb.Item>
         </Breadcrumb>
         <div className="filter-shop" style={{ height: "30px" }}>
-          <Badge count={5}></Badge>
+          {cart.amount} Item
         </div>
       </div>
       {product === null ? null : (

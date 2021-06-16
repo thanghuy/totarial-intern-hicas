@@ -1,9 +1,11 @@
 import React from "react";
 import { Row, Col, Card, Input } from "antd";
+import CartApi from '../../../services/CartAPI';
 interface Cart {
   ListCart: Array<any>;
 }
 const ListItem = ({ ListCart }: Cart) => {
+  
   const result = ListCart.map((item) => {
     return (
       <Row
@@ -25,7 +27,7 @@ const ListItem = ({ ListCart }: Cart) => {
               <Col span={6}>
                 <div className="cart-number">
                   <span>+</span>
-                  <Input value={1} />
+                  <Input value={item.amount} />
                   <span>-</span>
                 </div>
               </Col>

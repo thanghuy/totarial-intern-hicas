@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Row, Col, Card, Rate, Button,message } from "antd";
 import CartApi from "../../../services/CartAPI";
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import {updateItemCart} from '../../Cart/cartSlice';
 interface Product {
   idProduct: string;
   Name: string;
@@ -12,6 +13,7 @@ interface Product {
 }
 const Detail = ({ idProduct, Name, rate, Price, Content, Image }: Product) => {
   const dispatch = useAppDispatch();
+  const cart = useAppSelector(state => state.cart);
   const [isShowALert,setShowAlert] = useState<boolean>(false);
   const addToCart = async (
     idProduct: string
@@ -25,7 +27,12 @@ const Detail = ({ idProduct, Name, rate, Price, Content, Image }: Product) => {
     try {
       const resp = await CartApi.addCart(data);
       if(resp.status){
-        dispatch({type : "UPDATE_CART"});
+        dispatch(updateItemCart({
+          amount : cart.amount + 1,
+          total: cart.total,
+          subTotal: cart.subTotal,
+          tax: cart.tax
+        }));
         message.success('Add cart success', 4);
       }
       console.log(resp);
