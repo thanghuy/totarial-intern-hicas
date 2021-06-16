@@ -1,0 +1,17 @@
+.top-bar-content{
+    width: 100%;
+    display: flex;
+
+}
+.filter-shop{
+    position: absolute;
+    right: 50px;
+}
+
+.product-grid{
+    display: grid;
+	grid-template-columns: 480px 480px;
+    grid-template-rows: auto;
+	grid-gap: 10px;
+	margin-top: 10px;
+}
