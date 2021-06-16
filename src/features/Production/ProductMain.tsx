@@ -27,7 +27,7 @@ const ProductMain = ({ match }: { match: RouteInfo }) => {
       }
     };
     fetchProduct();
-  }, []);
+  }, [id]);
   return (
     <>
       <Title level={4}>Shop</Title>

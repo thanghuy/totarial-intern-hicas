@@ -2,7 +2,9 @@ import React from "react";
 import { Row, Col, Card } from "antd";
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { useAppSelector } from "../../../app/hooks";
 const User = () => {
+  const user: any = useAppSelector(state => state.auth.infoUser);
   return (
     <Row>
       <Col span={24}>
@@ -27,16 +29,16 @@ const User = () => {
                   paddingTop: "15px",
                 }}
               >
-                <h2>MR.USER</h2>
-                <h3>Email : user@gmail.com</h3>
+                <h2>{user.name}</h2>
+                <h3>Email : {user.email}</h3>
               </div>
-              <h4>01/01/2018</h4>
-              <h4>Male</h4>
+              <h4>{user.birthDate}</h4>
+              <h4>{user.sex}</h4>
               <h4>
-                <u>15, Duy Tan, Dich Vong Hau, Cau Giay, Ha Noi</u>
+                <u>{user.addressCompany}</u>
               </h4>
               <h4>
-                <u>15, Duy Tan, Dich Vong Hau, Cau Giay, Ha Noi</u>
+                <u>{user.addressHome}</u>
               </h4>
             </Col>
           </Row>

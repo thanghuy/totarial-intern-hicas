@@ -1,11 +1,8 @@
-import {all, takeLatest} from 'redux-saga/effects';
-
-function* workerTest(){
-    console.log("Susscess");
-}
+import {all} from 'redux-saga/effects';
+import AuthSaga from '../features/auth/authSaga';
 
 export default function* RootSaga(){
     yield all([
-        takeLatest("ACTION_TEST", workerTest)
+        AuthSaga()
     ])
 }

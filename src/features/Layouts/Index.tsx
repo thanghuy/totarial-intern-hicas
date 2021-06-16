@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import HeaderFC from "./Header/Main";
 import LeftToolBar from "./LeftToolBar/Main";
-import { Layout, Breadcrumb } from "antd";
+import { Layout } from "antd";
 const { Header, Sider, Content } = Layout;
 
 interface Props {

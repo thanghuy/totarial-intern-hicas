@@ -1,6 +1,6 @@
 import { Row, Col, Divider } from "antd";
 import { Card } from "antd";
-import { Rate,Button } from "antd";
+import { Rate } from "antd";
 import { Link } from "react-router-dom";
 
 interface Props{
@@ -24,7 +24,6 @@ const ProductList = ({ProductList}: Props) => {
                 <p>{item.name}</p>
                 <h3>{item.price} VND</h3>
                 <Rate disabled defaultValue={item.rate} />
-                <Button type="primary">Primary Button</Button>
               </Col>
             </Row>
           </Card>

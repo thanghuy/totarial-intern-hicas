@@ -1,11 +1,39 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useAppDispatch } from "../../../app/hooks";
+import AuthAPI from "../../../services/AuthAPI";
+import { useState } from "react";
+import { doLogin } from "../authSlice";
+import { Alert } from "antd";
 const LoginForm = () => {
-  //   const onFinish = (values) => {
-  //     console.log('Received values of form: ', values);
-  //   };
-
+  const history = useHistory();
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isShowAlert, setShowAlert] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const onFinish = async (values: any) => {
+    setLoading(true);
+    let result: Object = {};
+    try {
+      const resp = await AuthAPI.doLoginApi(values);
+      if (resp.status) {
+        result = {
+          isLogin: true,
+          infoUser: resp.data,
+        };
+        localStorage.setItem("@accessToken", resp.data.token);
+        localStorage.setItem("@idUser", resp.data.idUser);
+        dispatch(doLogin(result));
+        history.push("/");
+        setShowAlert(false);
+      } else {
+        setShowAlert(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
   return (
     <Form
       name="normal_login"
@@ -13,21 +41,30 @@ const LoginForm = () => {
       initialValues={{
         remember: true,
       }}
-      //   onFinish={onFinish}
+      onFinish={onFinish}
     >
+      {!isShowAlert ? null : (
+        <Alert
+          message="Incorrect account or password "
+          type="error"
+          style={{ marginBottom: "30px" }}
+          showIcon
+        />
+      )}
+
       <Form.Item
-        name="username"
+        name="email"
         rules={[
           {
             required: true,
-            message: "Tên đăng nhập không được đê trống !",
+            message: "Is not null !",
           },
         ]}
       >
         <Input
           size="large"
           prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Tên đăng nhập"
+          placeholder="Email"
         />
       </Form.Item>
       <Form.Item
@@ -35,29 +72,29 @@ const LoginForm = () => {
         rules={[
           {
             required: true,
-            message: "Vui lòng nhập mật khẩu !",
+            message: "Is not null !",
           },
         ]}
       >
         <Input.Password
           prefix={<LockOutlined className="site-form-item-icon" />}
           size="large"
-          placeholder="Mật khẩu"
+          placeholder="Password"
         />
       </Form.Item>
       <Form.Item>
         <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox style={{color : 'white'}} >Lưu đăng nhập</Checkbox>
+          <Checkbox style={{ color: "white" }}>Remember</Checkbox>
         </Form.Item>
 
         <Link to="/quen-mat-khau" className="login-form-forgot">
-          Quên mật khẩu ?
+          Forget password ?
         </Link>
       </Form.Item>
 
       <Form.Item>
-        <Button size="large" htmlType="submit" className="login-form-button">
-          Đăng nhập
+        <Button size="large" htmlType="submit" className="login-form-button" loading={isLoading} >
+          {isLoading ? "Loading" : "Login"}
         </Button>
       </Form.Item>
     </Form>

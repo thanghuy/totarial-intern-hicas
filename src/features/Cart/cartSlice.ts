@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface CartState{
-    item: number;
+    amount: number;
 }
 const initialState: CartState = {
-    item : 0,
+    amount : 0,
 }
 
 const cartSlice = createSlice({
@@ -12,7 +12,7 @@ const cartSlice = createSlice({
     initialState,
     reducers : {
         updateItemCart : (state, action) =>{
-
+            state.amount = action.payload;
         }
     }
 })
