@@ -3,7 +3,6 @@ import { Breadcrumb } from "antd";
 import { Typography } from "antd";
 import "../Shop/css/style.shop.css";
 import Detail from "./components/Detail";
-import { Badge } from "antd";
 import ProductAPI from "../../services/ProductAPI";
 import { RouteProps } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";

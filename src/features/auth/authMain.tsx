@@ -8,7 +8,7 @@ const AuthMain = ({ children }: any) => {
   const isLoading = useAppSelector(state => state.auth.isLoading);
   useEffect(() => {
     dispatch({ type: "CHECK_LOGIN_USER" }); 
-  }, []);
+  }, [dispatch]);
   return (
     <Fragment>
       {isLoading ? "" : children}

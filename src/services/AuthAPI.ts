@@ -8,6 +8,12 @@ const AuthAPI = {
     checkExpiredToken : (id: string) =>{
         const url = "Users/" + id;
         return axiosClient.get(url);
+    },
+    CreateUser : (data: Object) =>{
+        console.log(data)
+        const url = "Users/register";
+        return axiosClient.post(url,data);
     }
+
 }
 export default AuthAPI;

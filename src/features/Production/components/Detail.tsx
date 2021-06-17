@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Row, Col, Card, Rate, Button,message } from "antd";
 import CartApi from "../../../services/CartAPI";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
@@ -14,7 +14,6 @@ interface Product {
 const Detail = ({ idProduct, Name, rate, Price, Content, Image }: Product) => {
   const dispatch = useAppDispatch();
   const cart = useAppSelector(state => state.cart);
-  const [isShowALert,setShowAlert] = useState<boolean>(false);
   const addToCart = async (
     idProduct: string
   ) => {

@@ -4,7 +4,7 @@ import FormSigin from "../components/FormSigin";
 import Logo from "../../../assets/icons/logo.svg";
 const Register = () => {
   return (
-    <div className="box-login">
+    <div className="box-sigin">
       <div className="container-login">
         <div className="logo-login">
           <img src={Logo} alt="..." />

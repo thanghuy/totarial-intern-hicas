@@ -1,30 +1,19 @@
-import { Form, Input, Button, Checkbox } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link, useHistory } from "react-router-dom";
-import { useAppDispatch } from "../../../app/hooks";
+import { Form, Input, Button } from "antd";
+import { useHistory } from "react-router-dom";
 import AuthAPI from "../../../services/AuthAPI";
 import { useState } from "react";
-import { doLogin } from "../authSlice";
 import { Alert } from "antd";
 const FormSign = () => {
   const history = useHistory();
   const [isLoading, setLoading] = useState<boolean>(false);
   const [isShowAlert, setShowAlert] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
   const onFinish = async (values: any) => {
+    console.log(values);
     setLoading(true);
-    let result: Object = {};
     try {
-      const resp = await AuthAPI.doLoginApi(values);
+      const resp = await AuthAPI.CreateUser(values);
       if (resp.status) {
-        result = {
-          isLogin: true,
-          infoUser: resp.data,
-        };
-        localStorage.setItem("@accessToken", resp.data.token);
-        localStorage.setItem("@idUser", resp.data.idUser);
-        dispatch(doLogin(result));
-        history.push("/");
+        history.push("/login");
         setShowAlert(false);
       } else {
         setShowAlert(true);
@@ -45,13 +34,12 @@ const FormSign = () => {
     >
       {!isShowAlert ? null : (
         <Alert
-          message="Incorrect account or password "
+          message="Sigin failed "
           type="error"
           style={{ marginBottom: "30px" }}
           showIcon
         />
       )}
-
       <Form.Item
         name="email"
         rules={[
@@ -61,11 +49,7 @@ const FormSign = () => {
           },
         ]}
       >
-        <Input
-          size="large"
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Email"
-        />
+        <Input size="large" placeholder="Email" />
       </Form.Item>
       <Form.Item
         name="name"
@@ -76,11 +60,51 @@ const FormSign = () => {
           },
         ]}
       >
-        <Input
-          size="large"
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Name"
-        />
+        <Input size="large" placeholder="Name" />
+      </Form.Item>
+      <Form.Item
+        name="birthDate"
+        rules={[
+          {
+            required: true,
+            message: "Is not null !",
+          },
+        ]}
+      >
+        <Input type="date" size="large" placeholder="BirthDate" />
+      </Form.Item>
+      <Form.Item
+        name="sex"
+        rules={[
+          {
+            required: true,
+            message: "Is not null !",
+          },
+        ]}
+      >
+        <Input size="large" placeholder="Sex" />
+      </Form.Item>
+      <Form.Item
+        name="addressCompany"
+        rules={[
+          {
+            required: true,
+            message: "Is not null !",
+          },
+        ]}
+      >
+        <Input size="large" placeholder="Address Company" />
+      </Form.Item>
+      <Form.Item
+        name="addressHome"
+        rules={[
+          {
+            required: true,
+            message: "Is not null !",
+          },
+        ]}
+      >
+        <Input size="large" placeholder="Address Home" />
       </Form.Item>
       <Form.Item
         name="password"
@@ -91,24 +115,15 @@ const FormSign = () => {
           },
         ]}
       >
-        <Input.Password
-          prefix={<LockOutlined className="site-form-item-icon" />}
+        <Input.Password size="large" placeholder="Password" />
+      </Form.Item>
+      <Form.Item>
+        <Button
           size="large"
-          placeholder="Password"
-        />
-      </Form.Item>
-      <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox style={{ color: "white" }}>Remember</Checkbox>
-        </Form.Item>
-
-        <Link to="/quen-mat-khau" className="login-form-forgot">
-          Forget password ?
-        </Link>
-      </Form.Item>
-
-      <Form.Item>
-        <Button size="large" htmlType="submit" className="login-form-button" loading={isLoading} >
+          htmlType="submit"
+          className="login-form-button"
+          loading={isLoading}
+        >
           {isLoading ? "Loading" : "Register"}
         </Button>
       </Form.Item>

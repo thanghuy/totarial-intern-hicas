@@ -7,30 +7,40 @@ import CartAPI from "../../services/CartAPI";
 function* workerCheckLogin(): Generator {
     yield put(setLoading(true));
     let result = {};
-    try {
-        const idUser = localStorage.getItem("@idUser");
-        const resp: any = yield call<any>(AuthAPI.checkExpiredToken, idUser);
-        const respCart: any = yield call<any>(CartAPI.getCart, idUser);
-        result = {
-            isLogin : true,
-            infoUser : resp.data 
+    const idUser = localStorage.getItem("@idUser");
+    if(idUser){
+        try {
+        
+            const resp: any = yield call<any>(AuthAPI.checkExpiredToken, idUser);
+            const respCart: any = yield call<any>(CartAPI.getCart, idUser);
+            result = {
+                isLogin : true,
+                infoUser : resp.data 
+            }
+            yield put(doLogin(result));
+            yield put(updateItemCart(
+            {
+                amount : respCart.amount,
+                total: respCart.total,
+                subTotal: respCart.subTotal,
+                tax: respCart.tax
+            }
+            ));
+        } catch (error) {
+            result = {
+                isLogin : false,
+                infoUser : {} 
+            }
+            yield put(doLogin(result));
+            console.log(error)
         }
-        yield put(doLogin(result));
-        yield put(updateItemCart(
-        {
-            amount : respCart.amount,
-            total: respCart.total,
-            subTotal: respCart.subTotal,
-            tax: respCart.tax
-        }
-        ));
-    } catch (error) {
+    }
+    else{
         result = {
             isLogin : false,
             infoUser : {} 
         }
         yield put(doLogin(result));
-        console.log(error)
     }
     yield put(setLoading(false));
 }

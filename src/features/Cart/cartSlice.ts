@@ -5,12 +5,14 @@ interface CartState{
     total: number;
     subTotal: number;
     tax: number;
+    data: Array<any>;
 }
 const initialState: CartState = {
     amount : 0,
     total: 0,
     subTotal: 0,
-    tax: 0
+    tax: 0,
+    data:[]
 }
 
 const cartSlice = createSlice({
@@ -22,9 +24,12 @@ const cartSlice = createSlice({
             state.total = action.payload.total;
             state.subTotal = action.payload.subTotal;
             state.tax = action.payload.tax;
+        },
+        updateDataCart : (state , action) =>{
+            state.data = action.payload;
         }
     }
 })
 
-export const {updateItemCart} = cartSlice.actions;
+export const {updateItemCart, updateDataCart} = cartSlice.actions;
 export default cartSlice.reducer;
